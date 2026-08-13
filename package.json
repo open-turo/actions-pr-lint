@@ -2,15 +2,27 @@
   "author": "Turo engineering",
   "description": "GitHub Actions for PR description validation",
   "devDependencies": {
-    "lerna": "10.0.0"
+    "@open-turo/eslint-config-typescript": "23.2.0",
+    "@types/node": "24.12.2",
+    "@vercel/ncc": "0.38.4",
+    "@vitest/coverage-v8": "4.1.10",
+    "eslint": "9.39.5",
+    "lerna": "10.0.0",
+    "prettier": "3.9.6",
+    "rimraf": "6.1.3",
+    "typescript": "6.0.3",
+    "vitest": "4.1.10"
   },
   "engines": {
     "node": ">= 24.0.0"
   },
   "workspaces": [
-    "ci-placeholder"
+    "check-pr-checklist"
   ],
   "license": "MIT",
+  "overrides": {
+    "js-yaml": "4.3.1"
+  },
   "name": "@open-turo/actions-pr-lint",
   "private": true,
   "scripts": {

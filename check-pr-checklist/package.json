@@ -1,0 +1,26 @@
+{
+  "name": "@open-turo/check-pr-checklist",
+  "version": "1.0.0",
+  "description": "GitHub Action that validates all PR checklist checkboxes are checked",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "ncc build src/index.ts -m -o dist --license licenses.txt",
+    "prepare": "ncc build src/index.ts -m -o dist --license licenses.txt",
+    "clean": "rimraf dist",
+    "check-types": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "npm run lint:eslint && npm run check-types",
+    "lint:ci": "npm run check-types",
+    "lint:eslint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "dependencies": {
+    "@actions/core": "3.0.1"
+  },
+  "license": "MIT",
+  "private": true
+}
