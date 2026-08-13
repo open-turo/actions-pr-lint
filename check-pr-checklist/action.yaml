@@ -1,0 +1,28 @@
+name: Check PR Checklist
+description: Validates markdown checklists in a PR description with automatic mode detection
+
+inputs:
+  pr-body:
+    required: false
+    description: The PR body to check for unchecked checkboxes
+    default: ${{ github.event.pull_request.body }}
+  indicator:
+    required: false
+    description: >-
+      Keyword for HTML comment markers that identify validated checklist groups
+      (e.g. <!-- checklist --> or <!-- checklist select=2 -->).
+      When no markers are found, all checkboxes must be checked.
+      When markers are present, only marked blocks are validated.
+    default: checklist
+
+outputs:
+  total:
+    description: Total number of checkboxes found
+  checked:
+    description: Number of checked checkboxes
+  unchecked:
+    description: Number of unchecked checkboxes
+
+runs:
+  using: node24
+  main: dist/index.js

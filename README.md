@@ -13,7 +13,13 @@ GitHub Actions for PR description validation (checklists, formatting, convention
 
 ## Actions
 
-Actions will be added in follow-up PRs.
+### action: [`check-pr-checklist`](./check-pr-checklist)
+
+Validates that all markdown checkboxes in a PR description are checked.
+
+See usage [here](check-pr-checklist/README.md#usage).
+
+Documentation is found [here](check-pr-checklist/README.md).
 
 ## Get Help
 
