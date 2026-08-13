@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  pull_request: {}
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: open-turo/actions-gha/lint@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          semantic-release-extra-plugins: |
+            @open-turo/semantic-release-config
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: open-turo/actions-gha/test@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}

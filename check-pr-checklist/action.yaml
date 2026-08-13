@@ -1,0 +1,20 @@
+name: Check PR Checklist
+description: Validates that all markdown checkboxes in a PR description are checked
+
+inputs:
+  pr-body:
+    required: false
+    description: The PR body to check for unchecked checkboxes
+    default: ${{ github.event.pull_request.body }}
+
+outputs:
+  total:
+    description: Total number of checkboxes found
+  checked:
+    description: Number of checked checkboxes
+  unchecked:
+    description: Number of unchecked checkboxes
+
+runs:
+  using: node24
+  main: dist/index.js
