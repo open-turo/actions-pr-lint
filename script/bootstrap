@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+if [[ $CI != "true" ]]; then
+	echo -e "==>  Setting up commit hooks"
+	pre-commit install
+	pre-commit install --hook-type commit-msg
+fi
