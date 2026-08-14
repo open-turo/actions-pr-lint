@@ -1,0 +1,19 @@
+{
+  "name": "@open-turo/ci-placeholder",
+  "version": "0.0.0",
+  "description": "Temporary placeholder package that keeps the test workflow green until a real action package is added. Remove this package in the PR that adds the first real action.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "echo \"ci-placeholder: nothing to build\"",
+    "clean": "echo \"ci-placeholder: nothing to clean\"",
+    "lint": "echo \"ci-placeholder: nothing to lint\"",
+    "lint:ci": "echo \"ci-placeholder: nothing to lint\"",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "4.1.10",
+    "vitest": "4.1.10"
+  },
+  "license": "MIT"
+}

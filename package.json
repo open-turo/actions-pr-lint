@@ -1,0 +1,24 @@
+{
+  "author": "Turo engineering",
+  "description": "GitHub Actions for PR description validation",
+  "devDependencies": {
+    "lerna": "9.0.7"
+  },
+  "engines": {
+    "node": ">= 24.0.0"
+  },
+  "workspaces": [
+    "ci-placeholder"
+  ],
+  "license": "MIT",
+  "name": "@open-turo/actions-pr-lint",
+  "private": true,
+  "scripts": {
+    "build": "lerna run build",
+    "clean": "lerna run clean",
+    "lint": "lerna run lint",
+    "lint:ci": "lerna run lint:ci",
+    "prepare": "npm run lint && npm run build",
+    "test": "lerna run test --"
+  }
+}

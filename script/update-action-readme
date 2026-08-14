@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -e
+
+for i in $*; do
+  if [[ "$i" != *"/action.yaml" ]]; then
+    echo "skipping: ${i}"
+    continue
+  fi
+  readme_file=$(dirname "$i")/README.md
+  echo "npx action-docs --no-banner -a \"${i}\" --update-readme \"${readme_file}\""
+  npx action-docs --no-banner -a "${i}" --update-readme "${readme_file}"
+done
