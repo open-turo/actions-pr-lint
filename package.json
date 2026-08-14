@@ -2,7 +2,7 @@
   "author": "Turo engineering",
   "description": "GitHub Actions for PR description validation",
   "devDependencies": {
-    "lerna": "9.0.7"
+    "lerna": "10.0.0"
   },
   "engines": {
     "node": ">= 24.0.0"
