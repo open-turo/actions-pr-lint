@@ -17,6 +17,7 @@
     "node": ">= 24.0.0"
   },
   "workspaces": [
+    "check-jira-reference",
     "check-pr-checklist"
   ],
   "license": "MIT",
