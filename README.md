@@ -13,6 +13,14 @@ GitHub Actions for PR description validation (checklists, formatting, convention
 
 ## Actions
 
+### action: [`check-jira-reference`](./check-jira-reference)
+
+Validates that pull requests contain Jira ticket references in the PR title, body, branch name, and/or commit messages.
+
+See usage [here](check-jira-reference/README.md#usage).
+
+Documentation is found [here](check-jira-reference/README.md).
+
 ### action: [`check-pr-checklist`](./check-pr-checklist)
 
 Validates that all markdown checkboxes in a PR description are checked.
