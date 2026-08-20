@@ -1,0 +1,79 @@
+name: Check Jira Reference
+description: |
+  GitHub Action that validates pull requests contain Jira ticket references
+  in the PR title, body, branch name, and commit messages. Fails if no
+  references are found when in required mode.
+
+inputs:
+  jira-pattern:
+    required: false
+    description: |
+      Regular expression pattern for matching Jira issue keys.
+      Default: [A-Z][A-Z0-9]+-\d+ (matches PROJECT-123 format)
+    default: "[A-Z][A-Z0-9]+-\\d+"
+
+  required:
+    required: false
+    description: |
+      Whether Jira references are required. If true, the action will fail
+      when no references are found. If false, only outputs warnings.
+    default: "true"
+
+  excluded-authors:
+    required: false
+    description: |
+      Comma-separated list of PR authors to skip validation for.
+      Useful for bot accounts that create automated PRs without Jira references.
+    default: ""
+
+  skip-commits:
+    required: false
+    description: |
+      Whether to skip checking commit messages for Jira references.
+      Useful when you only want to check PR metadata.
+    default: "false"
+
+  pr-author:
+    required: false
+    description: The login of the pull request author
+    default: ${{ github.event.pull_request.user.login }}
+
+  pr-title:
+    required: false
+    description: Pull request title to check for Jira references
+    default: ${{ github.event.pull_request.title }}
+
+  pr-body:
+    required: false
+    description: Pull request body/description to check for Jira references
+    default: ${{ github.event.pull_request.body }}
+
+  branch-name:
+    required: false
+    description: Branch name to check for Jira references
+    default: ${{ github.event.pull_request.head.ref }}
+
+  github-token:
+    required: false
+    description: |
+      GitHub token for fetching PR commits. Required if skip-commits is false.
+      Defaults to GITHUB_TOKEN from the workflow.
+    default: ${{ github.token }}
+
+outputs:
+  issues:
+    description: Comma-separated list of found Jira issue keys
+
+  issue-count:
+    description: Number of unique Jira issue keys found
+
+  sources:
+    description: JSON object showing which sources contained issues
+
+  found:
+    description: |
+      "true" if any Jira issue keys were found, "false" otherwise
+
+runs:
+  using: node24
+  main: dist/index.js
