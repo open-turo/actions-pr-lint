@@ -2,16 +2,16 @@
   "author": "Turo engineering",
   "description": "GitHub Actions for PR description validation",
   "devDependencies": {
-    "@open-turo/eslint-config-typescript": "23.2.0",
-    "@types/node": "24.12.2",
-    "@vercel/ncc": "0.38.4",
-    "@vitest/coverage-v8": "4.1.10",
+    "@open-turo/eslint-config-typescript": "23.2.1",
+    "@types/node": "24.13.3",
+    "@vercel/ncc": "0.45.0",
+    "@vitest/coverage-v8": "4.1.11",
     "eslint": "9.39.5",
     "lerna": "10.0.0",
     "prettier": "3.9.6",
     "rimraf": "6.1.3",
     "typescript": "6.0.3",
-    "vitest": "4.1.10"
+    "vitest": "4.1.11"
   },
   "engines": {
     "node": ">= 24.0.0"
