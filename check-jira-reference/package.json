@@ -21,7 +21,7 @@
   "dependencies": {
     "@actions/core": "3.0.1",
     "@actions/github": "9.1.1",
-    "conventional-commits-parser": "6.4.0"
+    "conventional-commits-parser": "7.1.2"
   },
   "license": "MIT",
   "private": true
