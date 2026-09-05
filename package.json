@@ -22,7 +22,7 @@
   ],
   "license": "MIT",
   "overrides": {
-    "js-yaml": "4.3.2"
+    "js-yaml": "5.4.1"
   },
   "name": "@open-turo/actions-pr-lint",
   "private": true,
