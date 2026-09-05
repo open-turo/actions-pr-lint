@@ -2,7 +2,7 @@
   "author": "Turo engineering",
   "description": "GitHub Actions for PR description validation",
   "devDependencies": {
-    "@open-turo/eslint-config-typescript": "23.2.1",
+    "@open-turo/eslint-config-typescript": "23.2.2",
     "@types/node": "24.13.3",
     "@vercel/ncc": "0.45.0",
     "@vitest/coverage-v8": "4.1.11",
