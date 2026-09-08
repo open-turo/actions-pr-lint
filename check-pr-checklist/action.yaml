@@ -6,6 +6,16 @@ inputs:
     required: false
     description: The PR body to check for unchecked checkboxes
     default: ${{ github.event.pull_request.body }}
+  pr-author:
+    required: false
+    description: The login of the pull request author
+    default: ${{ github.event.pull_request.user.login }}
+  excluded-authors:
+    required: false
+    description: |
+      Comma-separated list of PR authors to skip validation for.
+      Useful for bot accounts that create automated PRs without checklists.
+    default: ""
   indicator:
     required: false
     description: >-
