@@ -5,6 +5,23 @@ import { parseAndValidate } from "./checklist-parser.js";
 export function main(): void {
   const prBody = getInput("pr-body");
   const indicator = getInput("indicator") || "checklist";
+  const prAuthor = getInput("pr-author") || "";
+  const excludedAuthors = new Set(
+    (getInput("excluded-authors") || "")
+      .split(",")
+      .map((entry) => entry.trim())
+      .filter(Boolean),
+  );
+
+  if (prAuthor !== "" && excludedAuthors.has(prAuthor)) {
+    info(
+      `Skipping checklist check: PR author "${prAuthor}" is in the excluded authors list`,
+    );
+    setOutput("total", "0");
+    setOutput("checked", "0");
+    setOutput("unchecked", "0");
+    return;
+  }
 
   const result = parseAndValidate(prBody, indicator);
 

@@ -144,6 +144,48 @@ describe("main action", () => {
     expect(setFailed).not.toHaveBeenCalled();
   });
 
+  test("skips validation when author is in excluded-authors list", () => {
+    mockInputs({
+      "excluded-authors": "renovate[bot],dependabot[bot]",
+      "pr-author": "renovate[bot]",
+      "pr-body": "- [ ] unchecked item",
+    });
+
+    main();
+
+    expect(setOutput).toHaveBeenCalledWith("total", "0");
+    expect(setOutput).toHaveBeenCalledWith("checked", "0");
+    expect(setOutput).toHaveBeenCalledWith("unchecked", "0");
+    expect(setFailed).not.toHaveBeenCalled();
+    expect(info).toHaveBeenCalledWith(
+      'Skipping checklist check: PR author "renovate[bot]" is in the excluded authors list',
+    );
+  });
+
+  test("does not skip when author is not in excluded-authors list", () => {
+    mockInputs({
+      "excluded-authors": "renovate[bot]",
+      "pr-author": "regular-user",
+      "pr-body": "- [ ] unchecked item",
+    });
+
+    main();
+
+    expect(setFailed).toHaveBeenCalled();
+  });
+
+  test("does not skip when excluded-authors is empty", () => {
+    mockInputs({
+      "excluded-authors": "",
+      "pr-author": "renovate[bot]",
+      "pr-body": "- [ ] unchecked item",
+    });
+
+    main();
+
+    expect(setFailed).toHaveBeenCalled();
+  });
+
   test("joins multiple group errors with a semicolon", () => {
     mockInputs({
       "pr-body": [
