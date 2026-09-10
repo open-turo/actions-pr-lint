@@ -204,4 +204,22 @@ describe("main action", () => {
     expect(setFailed).toHaveBeenCalledTimes(1);
     expect(mockedSetFailed.mock.calls[0]?.[0]).toContain(";");
   });
+
+  test("passes when the only checkbox is an HTML-comment control checkbox", () => {
+    mockInputs({
+      "pr-body": [
+        "This PR contains the following updates.",
+        "",
+        " - [ ] <!-- rebase-check -->If you want to rebase/retry this PR, check this box",
+      ].join("\n"),
+    });
+
+    main();
+
+    expect(setOutput).toHaveBeenCalledWith("total", "0");
+    expect(setOutput).toHaveBeenCalledWith("checked", "0");
+    expect(setOutput).toHaveBeenCalledWith("unchecked", "0");
+    expect(setFailed).not.toHaveBeenCalled();
+    expect(info).toHaveBeenCalledWith("No checkboxes found in PR body");
+  });
 });

@@ -69,6 +69,32 @@ block. The following line types break a block and start a new one:
 - Horizontal rules (`---`)
 - Indicator markers (`<!-- checklist -->`)
 
+### Ignored control checkboxes
+
+Some bots add control checkboxes to a PR description. A dependency manager, for
+example, adds a box that triggers a rebase. Such a checkbox is not a checklist
+item, so the action ignores it.
+
+A checkbox is ignored when its text starts with a complete HTML comment:
+
+```markdown
+- [ ] <!-- rebase-check -->If you want to rebase/retry this PR, check this box
+- [ ] <!-- rebase-all-open-prs -->Check this box to rebase all open PRs
+```
+
+The comment must open the text and must be closed. These checkboxes are
+validated as normal:
+
+```markdown
+- [ ] Updated the docs <!-- the comment is not at the start -->
+- [ ] <!-- the comment is never closed
+```
+
+An ignored checkbox does not break a checkbox block. It behaves like
+continuation text, so a control checkbox in the middle of a checklist keeps
+that checklist in one block. Ignored checkboxes are also left out of the
+`total`, `checked`, and `unchecked` outputs.
+
 ## Usage
 
 ```yaml

@@ -10,6 +10,7 @@ import { BLOCK_BREAKING_LINE_TYPES } from "./types.js";
 const CHECKBOX_PATTERN = /^\s*[-*+]\s+\[([ xX])\]\s*(.*)/;
 const HEADING_PATTERN = /^#{1,6}\s/;
 const HR_PATTERN = /^\s*(?:[-*_]\s*){3,}$/;
+const IGNORED_CHECKBOX_PATTERN = /^<!--.*?-->/;
 const REGEX_METACHARACTERS_PATTERN = /[.*+?^${}()|[\]\\]/g;
 
 /**
@@ -44,7 +45,9 @@ export function buildIndicatorMatcher(
 }
 
 /**
- * Classifies each line of a (fence-stripped) markdown body.
+ * Classifies each line of a (fence-stripped) markdown body. A checkbox whose text starts with a
+ * complete HTML comment is a bot control checkbox rather than a checklist item (e.g. the
+ * `<!-- rebase-check -->` box a dependency manager adds), so it is classified as `ignored`.
  * @param strippedLines - Lines of markdown with fenced code block contents blanked out.
  * @param matchIndicator - Matcher built by {@link buildIndicatorMatcher}.
  * @returns One {@link ClassifiedLine} per input line, 1-indexed.
@@ -68,6 +71,9 @@ export function classifyLines(
     if (checkboxMatch) {
       const checkedMarker = checkboxMatch[1];
       const text = checkboxMatch[2] ?? "";
+      if (IGNORED_CHECKBOX_PATTERN.test(text)) {
+        return { lineNumber, raw, type: "ignored" };
+      }
       const checkbox: Checkbox = {
         checked: checkedMarker === "x" || checkedMarker === "X",
         line: lineNumber,

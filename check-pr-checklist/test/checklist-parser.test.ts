@@ -801,3 +801,133 @@ describe("select=0-rejection", () => {
     `);
   });
 });
+
+describe("ignored-checkboxes", () => {
+  test("control checkbox prefixed with an HTML comment is ignored", () => {
+    const body = [
+      "This PR contains the following updates.",
+      "",
+      " - [ ] <!-- rebase-check -->If you want to rebase/retry this PR, check this box",
+    ].join("\n");
+    expect(parseAndValidate(body, "checklist")).toMatchInlineSnapshot(`
+      {
+        "checked": 0,
+        "errors": [],
+        "pass": true,
+        "total": 0,
+        "unchecked": 0,
+        "warnings": [],
+      }
+    `);
+  });
+
+  test("ignored checkbox does not fail no-markers mode", () => {
+    const body = [
+      "- [x] Updated tests",
+      "- [ ] <!-- rebase-all-open-prs -->Check this box to rebase all open PRs",
+    ].join("\n");
+    expect(parseAndValidate(body, "checklist")).toMatchInlineSnapshot(`
+      {
+        "checked": 1,
+        "errors": [],
+        "pass": true,
+        "total": 1,
+        "unchecked": 0,
+        "warnings": [],
+      }
+    `);
+  });
+
+  test("trailing HTML comment stays a normal checkbox", () => {
+    const body = "- [ ] Updated docs <!-- reminder -->";
+    expect(parseAndValidate(body, "checklist")).toMatchInlineSnapshot(`
+      {
+        "checked": 0,
+        "errors": [
+          {
+            "message": "1 of 1 checklist items are unchecked",
+          },
+        ],
+        "pass": false,
+        "total": 1,
+        "unchecked": 1,
+        "warnings": [],
+      }
+    `);
+  });
+
+  test("unclosed HTML comment stays a normal checkbox", () => {
+    const body = "- [ ] <!-- broken";
+    expect(parseAndValidate(body, "checklist")).toMatchInlineSnapshot(`
+      {
+        "checked": 0,
+        "errors": [
+          {
+            "message": "1 of 1 checklist items are unchecked",
+          },
+        ],
+        "pass": false,
+        "total": 1,
+        "unchecked": 1,
+        "warnings": [],
+      }
+    `);
+  });
+
+  test("ignored checkbox does not split a marked block", () => {
+    const body = [
+      "<!-- checklist -->",
+      "- [x] a",
+      "- [ ] <!-- rebase-check -->Check this box to rebase",
+      "- [x] b",
+    ].join("\n");
+    expect(parseAndValidate(body, "checklist")).toMatchInlineSnapshot(`
+      {
+        "checked": 2,
+        "errors": [],
+        "pass": true,
+        "total": 2,
+        "unchecked": 0,
+        "warnings": [],
+      }
+    `);
+  });
+
+  test("select counting excludes ignored checkboxes", () => {
+    const body = [
+      "<!-- checklist select=1 -->",
+      "- [x] Option A",
+      "- [ ] <!-- rebase-check -->Check this box to rebase",
+      "- [ ] Option B",
+    ].join("\n");
+    expect(parseAndValidate(body, "checklist")).toMatchInlineSnapshot(`
+      {
+        "checked": 1,
+        "errors": [],
+        "pass": true,
+        "total": 2,
+        "unchecked": 1,
+        "warnings": [],
+      }
+    `);
+  });
+
+  test("block of only ignored checkboxes raises no warning", () => {
+    const body = [
+      "<!-- checklist -->",
+      "- [x] a",
+      "",
+      "- [ ] <!-- rebase-check -->Check this box to rebase",
+    ].join("\n");
+    expect(parseAndValidate(body, "checklist")).toMatchInlineSnapshot(`
+      {
+        "checked": 1,
+        "errors": [],
+        "pass": true,
+        "total": 1,
+        "unchecked": 0,
+        "warnings": [],
+      }
+    `);
+  });
+});

@@ -36,11 +36,12 @@ export interface IndicatorMarker {
 
 /** Line type tag. */
 export type LineType =
-  "blank" | "checkbox" | "heading" | "hr" | "indicator" | "other";
+  "blank" | "checkbox" | "heading" | "hr" | "ignored" | "indicator" | "other";
 
 /**
  * Line types that terminate a checkbox block. Non-checkbox lines whose type is NOT
- * in this set are absorbed into the current block (e.g. continuation text, images).
+ * in this set are absorbed into the current block (e.g. continuation text, images,
+ * ignored control checkboxes).
  */
 export const BLOCK_BREAKING_LINE_TYPES: ReadonlySet<LineType> = new Set([
   "blank",
