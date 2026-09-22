@@ -6,7 +6,7 @@
     "@types/node": "24.13.6",
     "@vercel/ncc": "0.45.0",
     "@vitest/coverage-v8": "5.0.1",
-    "eslint": "9.39.5",
+    "eslint": "10.11.0",
     "lerna": "10.0.1",
     "prettier": "3.9.8",
     "rimraf": "6.1.3",
