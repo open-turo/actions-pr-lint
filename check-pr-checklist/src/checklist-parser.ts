@@ -48,7 +48,7 @@ export function parseAndValidate(
 
   const markers = classified
     .filter(
-      (line): line is { marker: IndicatorMarker } & ClassifiedLine =>
+      (line): line is ClassifiedLine & { marker: IndicatorMarker } =>
         line.type === "indicator" && line.marker !== undefined,
     )
     .map((line) => line.marker);
